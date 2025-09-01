@@ -1,44 +1,52 @@
-
-
-
 "use client";
-import React, { useState } from "react";
 
-function page() {
+import { useState } from "react";
+
+export default function SignupPage() {
   const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
-  const [isRegistered, setIsRegistered] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const userData = { mobile, password };
+
+    // user data ko object me store karenge
+    const userData = {
+      mobile,
+      password,
+    };
+
+    // localStorage me save
     localStorage.setItem("user", JSON.stringify(userData));
-    setIsRegistered(true);
+
     alert("Signup successful! Data saved in localStorage ✅");
+
+    // input clear karne ke liye
     setMobile("");
     setPassword("");
   };
 
-  if (isRegistered || (typeof window !== "undefined" && localStorage.getItem("user"))) {
-    // If already registered, show login link
-    return (
-      <div style={{textAlign: 'center', marginTop: '50px'}}>
-        <h1>Signup complete!</h1>
-        <a href="/login" style={{color: '#2563eb', fontWeight: 'bold', fontSize: '18px'}}>Go to Login</a>
-      </div>
-    );
-  }
-
   return (
+    
     <div className="min-h-screen flex items-center justify-center bg-black bg-opacity-90">
       <div className="bg-gray-900 text-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+        {/* Logo and Title */}
         <div className="text-center mb-6">
+          <img
+            src="doc.jpg" // apna logo yaha daal dena
+            alt="Logo"
+            className="mx-auto w-16"
+          
+          />
           <h1 className="text-2xl font-bold">Admin Dashboard</h1>
           <p className="text-gray-400 text-sm mt-1">Create your account</p>
         </div>
+
+        {/* Signup Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-300 text-sm mb-1">Mobile Number</label>
+            <label className="block text-gray-300 text-sm mb-1">
+              Mobile Number
+            </label>
             <input
               type="text"
               value={mobile}
@@ -48,8 +56,11 @@ function page() {
               required
             />
           </div>
+
           <div>
-            <label className="block text-gray-300 text-sm mb-1">Password</label>
+            <label className="block text-gray-300 text-sm mb-1">
+              Password
+            </label>
             <input
               type="password"
               value={password}
@@ -59,6 +70,7 @@ function page() {
               required
             />
           </div>
+
           <button
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 transition-colors p-3 rounded-lg font-semibold"
@@ -66,9 +78,16 @@ function page() {
             Sign Up
           </button>
         </form>
+
+        {/* Already have account */}
+        <p className="text-gray-400 text-sm text-center mt-4">
+          Already have an account?{" "}
+          <a href="/login" className="text-blue-400 hover:underline">
+            Login
+          </a>
+        </p>
       </div>
     </div>
+    
   );
 }
-
-export default page;
